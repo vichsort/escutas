@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Escutas',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromRGBO(30, 215, 96, 1),
+          seedColor: const Color.fromRGBO(30, 215, 96, 0),
         ),
       ),
       home: const HomePage(),

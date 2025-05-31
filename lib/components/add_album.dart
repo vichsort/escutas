@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../logic/request.dart';
 
 class AddAlbumPopup extends StatefulWidget {
   const AddAlbumPopup({super.key});
@@ -8,6 +9,14 @@ class AddAlbumPopup extends StatefulWidget {
 }
 
 class _AddAlbumPopupState extends State<AddAlbumPopup> {
+  final TextEditingController _albumUriController = TextEditingController();
+
+  @override
+  void dispose() {
+    _albumUriController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +44,13 @@ class _AddAlbumPopupState extends State<AddAlbumPopup> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
+              TextField(
+                controller: _albumUriController,
+                decoration: InputDecoration(
+                  labelText: 'Album URI',
+                  border: OutlineInputBorder(),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -47,6 +63,7 @@ class _AddAlbumPopupState extends State<AddAlbumPopup> {
                   ElevatedButton(
                     onPressed: () {
                       // Confirm button logic
+                      handleRequest(_albumUriController.text);
                       Navigator.of(context).pop();
                     },
                     child: Text('Confirm'),
