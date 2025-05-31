@@ -1,5 +1,9 @@
+// POP UP PARA ADICIONAR ALBUM
+// AQUI SE PEDE URI. TEST: spotify:album:79ONNoS4M9tfIA1mYLBYVX
+
 import 'package:flutter/material.dart';
 import '../logic/request.dart';
+import '../pages/escutas.dart';
 
 class AddAlbumPopup extends StatefulWidget {
   const AddAlbumPopup({super.key});
@@ -50,22 +54,35 @@ class _AddAlbumPopupState extends State<AddAlbumPopup> {
                   labelText: 'Album URI',
                   border: OutlineInputBorder(),
                 ),
+                onChanged: (value) {
+                  setState(() {});
+                },
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); // Cancel button
+                      Navigator.of(context).pop();
                     },
                     child: Text('Cancel'),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Confirm button logic
-                      handleRequest(_albumUriController.text);
-                      Navigator.of(context).pop();
-                    },
+                    onPressed:
+                        _albumUriController.text.startsWith('spotify:album:')
+                        ? () {
+                            Future<Map<String, dynamic>> info = handleRequest(
+                              _albumUriController.text,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EscutasPage(albumInfo: info),
+                              ),
+                            );
+                          }
+                        : null,
                     child: Text('Confirm'),
                   ),
                 ],
