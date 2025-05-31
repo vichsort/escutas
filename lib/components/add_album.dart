@@ -70,15 +70,29 @@ class _AddAlbumPopupState extends State<AddAlbumPopup> {
                   ElevatedButton(
                     onPressed:
                         _albumUriController.text.startsWith('spotify:album:')
-                        ? () {
-                            Future<Map<String, dynamic>> info = handleRequest(
+                        ? () async {
+                            // Mostra loading
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) =>
+                                  Center(child: CircularProgressIndicator()),
+                            );
+
+                            // Aguarda o resultado
+                            Map<String, dynamic> info = await handleRequest(
                               _albumUriController.text,
                             );
+
+                            // Fecha o loading
+                            Navigator.of(context).pop();
+
+                            // Navega para a próxima página com o resultado
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    EscutasPage(albumInfo: info),
+                                    EscutasPage(albumInfo: info, editing: true),
                               ),
                             );
                           }

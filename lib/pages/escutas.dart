@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import '../components/album.dart';
 
 class EscutasPage extends StatefulWidget {
-  final Future<Map<String, dynamic>> albumInfo;
+  final Map<String, dynamic> albumInfo;
+  final bool editing;
 
-  const EscutasPage({super.key, required this.albumInfo});
+  const EscutasPage({
+    super.key,
+    required this.albumInfo,
+    required this.editing,
+  });
 
   @override
   State<EscutasPage> createState() => _EscutasPageState();
@@ -21,34 +27,7 @@ class _EscutasPageState extends State<EscutasPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("a"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FutureBuilder<Map<String, dynamic>>(
-              future: widget.albumInfo,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Ocorreu um erro: ${snapshot.error}');
-                } else if (snapshot.hasData) {
-                  return Image.network(
-                    snapshot.data?["albumInfo"]["Cover"],
-                    errorBuilder: (context, error, stackTrace) {
-                      return Text('Erro ao carregar a imagem');
-                    },
-                  );
-                } else {
-                  return Text(
-                    'Não foi possível realizar a verificação. Talvez verificar sua conexão possa resolver seu problema!',
-                  );
-                }
-              },
-            ),
-          ],
-        ),
-      ),
+      body: AlbumViewer(info: widget.albumInfo, editing: widget.editing),
     );
   }
 }
