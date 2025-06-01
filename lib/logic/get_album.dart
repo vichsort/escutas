@@ -21,6 +21,12 @@ Future<Map<String, dynamic>> getAlbum(String token, id) async {
     throw ("Houve um erro com a requisição. Status code: ${response.statusCode}");
   }
   final jsonResult = jsonDecode(response.body);
+
+  String lancamento = jsonResult["release_date"];
+  List<String> sep = lancamento.split('-');
+
+  String data = '${sep[2]}/${sep[1]}/${sep[0]}';
+
   Map<String, dynamic> res = {
     // CAPA DO ALBUM
     "Cover": jsonResult["images"][0]["url"],
@@ -37,7 +43,7 @@ Future<Map<String, dynamic>> getAlbum(String token, id) async {
     }).toList(),
 
     // LANÇAMENTO DO ALBUM
-    "Release": jsonResult["release_date"],
+    "Release": data,
 
     // NUMERO DE FAIXAS
     "Number_tracks": jsonResult["total_tracks"],

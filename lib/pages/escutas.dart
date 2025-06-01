@@ -16,18 +16,17 @@ class EscutasPage extends StatefulWidget {
 }
 
 class _EscutasPageState extends State<EscutasPage> {
-  // PARA ESTA PÁGINA É NECESSÁRIO QUE PEGUEMOS O VALOR
-  // QUE FICOU ARMAZENADO LÁ EM handleRequest (AQUELE MAP
-  // COM id e albumInfo) PARA GERAR A PÁGINA DE FAZER A REVIEW.
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("a"),
+        title: Text("Escutas"),
       ),
-      body: AlbumViewer(info: widget.albumInfo, editing: widget.editing),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: AlbumViewer(info: widget.albumInfo, editing: widget.editing),
+      ),
     );
   }
 }
