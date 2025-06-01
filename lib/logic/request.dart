@@ -7,5 +7,5 @@ Future<Map<String, dynamic>> handleRequest(String uri) async {
   String id = dismantleUri(uri);
   Map<String, dynamic> albumInfo = await getAlbum(token, id);
 
-  return {'id': id, 'albumInfo': albumInfo};
+  return albumInfo;
 }

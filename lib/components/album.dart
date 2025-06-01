@@ -12,6 +12,22 @@ class AlbumViewer extends StatefulWidget {
 }
 
 class _AlbumViewerState extends State<AlbumViewer> {
+  Map<String, dynamic> grades = {
+    "👑👑👑": 10,
+    "👑👑": 9.8,
+    "👑": 9.5,
+    "#": 9,
+    "##": 8.5,
+    "###": 8,
+    "good normal": 7,
+    "mid normal": 5,
+    "bad normal": 4,
+    "~ bad ~": 3,
+    "~ bad ~ 💀": 2,
+    "~ bad ~ 💀💀": 1,
+    "~ bad ~ 💀💀💀": 0,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +35,7 @@ class _AlbumViewerState extends State<AlbumViewer> {
         Row(
           children: [
             Image.network(
-              widget.info["albumInfo"]["Cover"],
+              widget.info["Cover"],
               errorBuilder: (context, error, stackTrace) {
                 return Text('Erro ao carregar a imagem');
               },
@@ -29,20 +45,25 @@ class _AlbumViewerState extends State<AlbumViewer> {
             SizedBox(width: 20),
             Column(
               children: [
-                Text(
-                  widget.info["albumInfo"]["Name"],
-                  style: TextStyle(fontSize: 20),
-                ),
+                Text(widget.info["Name"], style: TextStyle(fontSize: 20)),
                 GestureDetector(
                   onTap: () {
-                    final artistUrl =
-                        widget.info["albumInfo"]["Artist"][0]["Link"];
+                    final artistUrl = widget.info["Artist"][0]["Link"];
                     launchUrl(Uri.parse(artistUrl));
                   },
-                  child: Text(widget.info["albumInfo"]["Artist"][0]["Name"]),
+                  child: Text(
+                    widget.info["Artist"][0]["Name"],
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-                Text(widget.info["albumInfo"]["Release"]),
-                Text('${widget.info["albumInfo"]["Number_tracks"]} Faixas'),
+                Text(
+                  'Data de lançamento: ${widget.info["Release"]}',
+                  textAlign: TextAlign.left,
+                ),
+                Text(
+                  '${widget.info["Number_tracks"]} Faixas',
+                  textAlign: TextAlign.left,
+                ),
               ],
             ),
           ],
@@ -51,12 +72,32 @@ class _AlbumViewerState extends State<AlbumViewer> {
         Divider(),
         Expanded(
           child: ListView.builder(
-            itemCount: widget.info['albumInfo']['Tracks']?.length ?? 0,
+            itemCount: widget.info['Tracks']?.length ?? 0,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  widget.info['albumInfo']['Tracks'][index]['Title'] ??
-                      'Título indisponível',
+              final track = widget.info['Tracks'][index];
+              return Card(
+                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ListTile(
+                  leading: track['Explicit'] == true
+                      ? Icon(Icons.explicit, color: Colors.red)
+                      : null,
+                  title: Text(track['Title'] ?? 'Título indisponível'),
+                  trailing: DropdownButton<String>(
+                    icon: Icon(Icons.more_vert),
+                    items: grades.keys.map((key) {
+                      return DropdownMenuItem<String>(
+                        value: key,
+                        child: Text(key),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      print("TRACK: ${track['Title']}, NOTA: $newValue");
+                      setState(() {
+                        track['Grade'] = newValue;
+                      });
+                      print(track['Grade']);
+                    },
+                  ),
                 ),
               );
             },

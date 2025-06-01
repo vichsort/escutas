@@ -10,6 +10,7 @@ void addEscuta(
   int numeroFaixas,
   String notaMedia,
   Map<String, String> faixasNotas,
+  String? consideracoes,
 ) {
   escutas.add({
     'Cover': cover,
@@ -21,5 +22,6 @@ void addEscuta(
     'Tracks': numeroFaixas,
     'Average': notaMedia,
     'Grades': faixasNotas,
+    'Details': consideracoes,
   });
 }
