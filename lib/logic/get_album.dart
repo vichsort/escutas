@@ -9,8 +9,7 @@ String dismantleUri(String uri) {
   return id;
 }
 
-Future<Map<String, dynamic>> getAlbum(String token) async {
-  final id = "79ONNoS4M9tfIA1mYLBYVX";
+Future<Map<String, dynamic>> getAlbum(String token, id) async {
   final url = Uri.parse("https://api.spotify.com/v1/albums/$id?market=br");
 
   final response = await http.get(

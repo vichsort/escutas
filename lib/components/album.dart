@@ -15,7 +15,6 @@ class AlbumViewer extends StatefulWidget {
 class _AlbumViewerState extends State<AlbumViewer> {
   @override
   Widget build(BuildContext context) {
-    print(widget.info);
     return Column(
       children: [
         Row(
@@ -38,7 +37,6 @@ class _AlbumViewerState extends State<AlbumViewer> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-
                 GestureDetector(
                   onTap: () {
                     final artistUrl = widget.info["albumInfo"]["Link"];
@@ -57,18 +55,19 @@ class _AlbumViewerState extends State<AlbumViewer> {
             ),
           ],
         ),
-        // Adapte o ListView.builder conforme necessário
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: widget.info['tracks']?.length ?? 0,
-        //     itemBuilder: (context, index) {
-        //       // Exemplo de uso do track.dart
-        //       return ListTile(
-        //         title: Text(widget.info['tracks'][index]['title']),
-        //       );
-        //     },
-        //   ),
-        // ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.info['albumInfo']['Tracks']?.length ?? 0,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  widget.info['albumInfo']['Tracks'][index]['Title'] ??
+                      'Título indisponível',
+                ),
+              );
+            },
+          ),
+        ),
       ],
     );
   }

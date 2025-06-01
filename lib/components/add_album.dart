@@ -1,5 +1,7 @@
 // POP UP PARA ADICIONAR ALBUM
-// AQUI SE PEDE URI. TEST: spotify:album:79ONNoS4M9tfIA1mYLBYVX
+// AQUI SE PEDE URI. TEST:
+// spotify:album:79ONNoS4M9tfIA1mYLBYVX
+// spotify:album:1ezs1QD5SYQ6LtxpC9y5I2
 
 import 'package:flutter/material.dart';
 import '../logic/request.dart';
